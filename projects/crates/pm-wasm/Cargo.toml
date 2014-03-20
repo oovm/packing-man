@@ -1,0 +1,19 @@
+[package]
+name = "pm-wasm"
+description = "Packing-Man Wasm cdylib"
+readme = "readme.md"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+publish = false
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+path = "src/lib.rs"
+
+[dependencies]
+pm-solver = { workspace = true }
+pm-svg = { workspace = true }
+pm-types = { workspace = true }
+serde_json = { workspace = true }

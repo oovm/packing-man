@@ -1,0 +1,24 @@
+[package]
+name = "pm-napi"
+description = "Packing-Man Node N-API"
+readme = "readme.md"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+publish = false
+
+[lib]
+crate-type = ["cdylib"]
+path = "src/lib.rs"
+
+[dependencies]
+napi = { workspace = true }
+napi-derive = { workspace = true }
+pm-solver = { workspace = true }
+pm-svg = { workspace = true }
+pm-types = { workspace = true }
+serde_json = { workspace = true }
+
+[build-dependencies]
+napi-build = "2"

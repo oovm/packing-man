@@ -1,0 +1,96 @@
+:root {
+    color-scheme: dark;
+    font-family: "Segoe UI", system-ui, sans-serif;
+    background: #05060a;
+    color: #e8ecf4;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+}
+
+.layout {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 2rem 1.25rem 3rem;
+}
+
+header h1 {
+    margin: 0 0 0.35rem;
+    font-size: 1.75rem;
+    letter-spacing: 0.04em;
+}
+
+.subtitle {
+    margin: 0;
+    color: #9aa3b5;
+    font-size: 0.95rem;
+}
+
+.stage {
+    margin: 1.5rem 0;
+    border: 1px solid #1e2433;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #000;
+}
+
+canvas {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem 1.5rem;
+    align-items: flex-end;
+}
+
+.controls label {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    font-size: 0.85rem;
+    color: #b8c0d0;
+}
+
+.controls input[type="range"] {
+    width: 160px;
+}
+
+.controls input[type="number"] {
+    width: 88px;
+    padding: 0.35rem 0.5rem;
+    border-radius: 6px;
+    border: 1px solid #2a3144;
+    background: #0d1018;
+    color: inherit;
+}
+
+.controls button {
+    padding: 0.55rem 1.1rem;
+    border: none;
+    border-radius: 8px;
+    background: #e8b84a;
+    color: #1a1200;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.controls button:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+.status {
+    margin-top: 1.25rem;
+    font-size: 0.82rem;
+    color: #7d8799;
+}

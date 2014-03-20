@@ -1,0 +1,6 @@
+<template>
+    <slot />
+</template>
+<script client>
+export default class Application {}
+</script>

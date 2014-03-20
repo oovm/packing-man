@@ -1,0 +1,13 @@
+[package]
+name = "pm-svg"
+description = "Packing Solution → SVG"
+readme = "readme.md"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+publish = false
+
+[dependencies]
+pm-geometry = { workspace = true }
+pm-types = { workspace = true }

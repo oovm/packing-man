@@ -1,0 +1,23 @@
+{
+    "name": "@sxo/packing-darwin-x64",
+    "version": "0.1.0",
+    "private": true,
+    "description": "SXO packing native platform bag (darwin-x64)",
+    "license": "MIT",
+    "os": [
+        "darwin"
+    ],
+    "cpu": [
+        "x64"
+    ],
+    "main": "lib/pm.darwin-x64.node",
+    "exports": {
+        ".": "./lib/pm.darwin-x64.node",
+        "./pm.darwin-x64.node": "./lib/pm.darwin-x64.node"
+    },
+    "files": [
+        "lib/pm.darwin-x64.node",
+        "readme.md"
+    ],
+    "publish": false
+}

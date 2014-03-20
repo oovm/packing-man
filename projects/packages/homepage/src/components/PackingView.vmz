@@ -1,0 +1,90 @@
+<template>
+    <main class="layout">
+        <header class="hero">
+            <div>
+                <h1>SXO Packing</h1>
+                <p class="subtitle">CircleSpherePacking · Birgin 族 · SVG 可视化</p>
+            </div>
+        </header>
+        <div class="workspace">
+            <section class="stage">
+                <div id="pm-svg-host" class="svg-host"></div>
+                <footer class="stage-meta">{{ status }}</footer>
+            </section>
+            <aside class="panel">
+                <section class="panel-block">
+                    <h2>问题</h2>
+                    <label>
+                        容器半径
+                        <input type="number" :value="containerR" min="1" step="0.5" @input="onContainerR" />
+                    </label>
+                    <label>
+                        圆半径
+                        <input type="number" :value="circleR" min="0.1" step="0.1" @input="onCircleR" />
+                    </label>
+                    <label>
+                        圆数量
+                        <input type="number" :value="count" min="1" max="200" step="1" @input="onCount" />
+                    </label>
+                    <label>
+                        算法
+                        <select :value="algorithm" @change="onAlgorithm">
+                            <option value="force">CPU 力松弛</option>
+                            <option value="greedy">CPU 贪心</option>
+                            <option value="gpu">GPU 力松弛</option>
+                        </select>
+                    </label>
+                    <button type="button" @click="onSolve">求解</button>
+                </section>
+            </aside>
+        </div>
+    </main>
+</template>
+<script client>
+import { runPackingDemo } from "../lib/packing-frame";
+
+export default class PackingView {
+    containerR = 10;
+    circleR = 1;
+    count = 19;
+    algorithm = "force";
+    status = "点击「求解」";
+
+    onContainerR(e) {
+        this.containerR = Number(e.target.value);
+    }
+    onCircleR(e) {
+        this.circleR = Number(e.target.value);
+    }
+    onCount(e) {
+        this.count = Number(e.target.value);
+    }
+    onAlgorithm(e) {
+        this.algorithm = e.target.value;
+    }
+    async onSolve() {
+        const host = document.getElementById("pm-svg-host");
+        if (!host) return;
+        this.status = "求解中…";
+        try {
+            const r = await runPackingDemo(host, {
+                containerR: this.containerR,
+                circleR: this.circleR,
+                count: this.count,
+                algorithm: this.algorithm,
+            });
+            this.status = `density ${(r.density * 100).toFixed(1)}% · ${r.algorithm} · ${r.feasible ? "feasible" : "infeasible"}`;
+        } catch (err) {
+            this.status = String(err);
+        }
+    }
+}
+</script>
+<style scoped>
+.layout { font-family: system-ui, sans-serif; padding: 1rem; max-width: 960px; margin: 0 auto; }
+.workspace { display: grid; grid-template-columns: 1fr 240px; gap: 1rem; }
+.svg-host { min-height: 420px; border: 1px solid #ccc; border-radius: 8px; background: #fafafa; }
+.panel label { display: block; margin-bottom: 0.75rem; }
+.panel input, .panel select { width: 100%; }
+.stage-meta { margin-top: 0.5rem; color: #555; font-size: 0.9rem; }
+</style>

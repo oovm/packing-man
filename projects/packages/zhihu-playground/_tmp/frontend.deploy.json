@@ -1,0 +1,10 @@
+{
+  "SchemaVersion": "1.1.0",
+  "Env": [],
+  "Framework": "vite",
+  "NodeVersion": "20",
+  "BuildCmd": "npm run build:track",
+  "InstallCmd": "npm ci",
+  "DeployCmd": "tcb hosting deploy ./dist /",
+  "BuildPath": "./zhihu-playground"
+}

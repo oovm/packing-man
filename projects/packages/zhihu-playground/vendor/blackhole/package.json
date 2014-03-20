@@ -1,0 +1,29 @@
+{
+    "name": "@doki-land/blackhole",
+    "version": "0.1.0",
+    "description": "TON blackhole host: wasm + node loaders",
+    "type": "module",
+    "license": "MIT",
+    "exports": {
+        "./wasm": {
+            "types": "./dist/wasm/index.d.ts",
+            "import": "./dist/wasm/index.js",
+            "default": "./dist/wasm/index.js"
+        },
+        "./node": {
+            "types": "./dist/node/index.d.ts",
+            "import": "./dist/node/index.js",
+            "default": "./dist/node/index.js"
+        }
+    },
+    "files": ["dist"],
+    "scripts": {
+        "build": "node ../../../scripts/run-tsc.mjs tsconfig.json"
+    },
+    "devDependencies": {
+        "@webgpu/types": "^0.1.60",
+        "typescript": "catalog:"
+    },
+    "engines": { "node": ">=18" },
+    "publish": false
+}

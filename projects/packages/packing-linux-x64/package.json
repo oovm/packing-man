@@ -1,0 +1,23 @@
+{
+    "name": "@sxo/packing-linux-x64",
+    "version": "0.1.0",
+    "private": true,
+    "description": "SXO packing native platform bag (linux-x64)",
+    "license": "MIT",
+    "os": [
+        "linux"
+    ],
+    "cpu": [
+        "x64"
+    ],
+    "main": "lib/pm.linux-x64-gnu.node",
+    "exports": {
+        ".": "./lib/pm.linux-x64-gnu.node",
+        "./pm.linux-x64-gnu.node": "./lib/pm.linux-x64-gnu.node"
+    },
+    "files": [
+        "lib/pm.linux-x64-gnu.node",
+        "readme.md"
+    ],
+    "publish": false
+}

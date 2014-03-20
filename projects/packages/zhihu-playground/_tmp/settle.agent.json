@@ -1,0 +1,11 @@
+{
+  "ProjectId": "",
+  "ProductCode": "cursor",
+  "ProductName": "Cursor",
+  "ProductVersion": "2026.03",
+  "Platform": "ide",
+  "Source": "agent-self-report",
+  "Status": "identified",
+  "Time": 1790756657639,
+  "SkillVersion": "1.2.0"
+}

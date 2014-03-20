@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+<script data-aiworks-event-tracking-bridge="1" data-aiworks-event-tracking-sha256="sha256-EoPGuFoq/s3r6h+3VAlMJ15toAPmybAFkhWE58QcZqI=" data-aiworks-event-tracking-ticket="__AIWORKS_EVENT_TRACKING_TICKET__">(()=>{try{const current=document.currentScript,ticket=current&&current.dataset.aiworksEventTrackingTicket,placeholder='__'+'AIWORKS_EVENT_TRACKING_TICKET'+'__';if(!ticket||ticket===placeholder)return;let sent=false;const send=data=>{if(sent)return false;let body;try{body=JSON.stringify({...data,deploy_uuid:ticket})}catch{return false}if(new TextEncoder().encode(body).byteLength>1048576)return false;sent=true;fetch("https://tracking.aiworks.site/api/v1/event_tracking",{method:'POST',headers:{'content-type':'application/json'},body,credentials:'omit',referrerPolicy:'no-referrer',keepalive:true}).catch(()=>{});return true};if(self===top){const pageShow=()=>send({member_id:null,member_hash_id:null,client_id:null,element_type:'Page',log_type:'Show',view_url:location.href,is_iframe_show:0,client_timestamp:Date.now(),p_platform:'desktopweb'});if(document.readyState==='complete')queueMicrotask(pageShow);else addEventListener('load',pageShow,{once:true});return}const allowed=origin=>{try{const url=new URL(origin),host=url.hostname.toLowerCase();return url.protocol==='https:'&&(host==='zhihu.com'||host.endsWith('.zhihu.com'))}catch{return false}};const receive=event=>{if(sent||event.source!==parent||!allowed(event.origin))return;const data=event.data;if(!data||Array.isArray(data)||Object.prototype.toString.call(data)!=='[object Object]')return;if(send(data))removeEventListener('message',receive)};addEventListener('message',receive)}catch{}})();</script>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>SXO Packing</title>
+    </head>
+    <body>
+        <div id="app"></div>
+        <script type="module" src="/src/main.ts"></script>
+    </body>
+</html>

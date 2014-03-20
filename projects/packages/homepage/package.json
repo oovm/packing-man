@@ -1,0 +1,21 @@
+{
+    "name": "@sxo/packing-homepage",
+    "version": "0.1.0",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "predev": "node ../../../scripts/ensure-vmz-host-manifest.mjs && pnpm --filter @sxo/packing run build && node ../../../scripts/build-wasm.mjs --copy-only --copy-homepage",
+        "prebuild": "node ../../../scripts/ensure-vmz-host-manifest.mjs && pnpm --filter @sxo/packing run build && node ../../../scripts/build-wasm.mjs --copy-only --copy-homepage",
+        "precheck": "node ../../../scripts/ensure-vmz-host-manifest.mjs",
+        "check": "vmz check .",
+        "dev": "vmz dev .",
+        "build": "vmz build ."
+    },
+    "dependencies": {
+        "@sxo/packing": "workspace:*",
+        "@vmz/core": "catalog:"
+    },
+    "devDependencies": {
+        "@vmz/vmz": "catalog:"
+    }
+}

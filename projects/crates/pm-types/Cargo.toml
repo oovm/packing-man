@@ -1,0 +1,13 @@
+[package]
+name = "pm-types"
+description = "Packing-Man 问题分类与求解合同"
+readme = "readme.md"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+publish = false
+
+[dependencies]
+serde = { workspace = true }
+thiserror = { workspace = true }

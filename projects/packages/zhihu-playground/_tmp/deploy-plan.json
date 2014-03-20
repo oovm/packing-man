@@ -1,0 +1,71 @@
+{
+  "SchemaVersion": "tcb.deploy/v1alpha1",
+  "Kind": "deploy-plan",
+  "Status": "review-required",
+  "ProjectType": "frontend-static",
+  "PackageManager": {
+    "Name": "npm",
+    "Lockfile": "package-lock.json"
+  },
+  "Components": [
+    {
+      "Unit": "frontend",
+      "Directory": ".",
+      "Framework": "vite",
+      "NodeVersion": "20",
+      "BuildCommand": "npm run build",
+      "OutputPath": "dist",
+      "Entry": null,
+      "Evidence": [
+        "package.json",
+        "vite.config.ts"
+      ],
+      "BuildRecipe": [
+        {
+          "Kind": "package-build",
+          "Package": "@doki-land/zhihu-playground",
+          "Directory": ".",
+          "DeclaredScript": "vite build",
+          "Execute": "npm run build",
+          "Source": "package.json#scripts.build",
+          "Produces": [
+            "dist"
+          ]
+        }
+      ],
+      "BuildArtifacts": [
+        {
+          "Role": "runtime-assets",
+          "Path": "dist",
+          "Required": true,
+          "Source": "package.json#scripts.build",
+          "Verification": "static-evidence"
+        }
+      ]
+    }
+  ],
+  "Routes": {
+    "BackendPrefixes": [],
+    "PreservePath": true
+  },
+  "Capabilities": {
+    "SSE": false,
+    "WebSocket": false
+  },
+  "EventTrackingBridge": {
+    "Status": "injected",
+    "ProtocolVersion": 1,
+    "Endpoint": "https://tracking.aiworks.site/api/v1/event_tracking",
+    "TicketEnvironmentVariable": "AIWORKS_EVENT_TRACKING_TICKET",
+    "TicketPlaceholder": "__AIWORKS_EVENT_TRACKING_TICKET__",
+    "ParentOriginPolicy": "https-zhihu-domain",
+    "ScriptSha256": "sha256-EoPGuFoq/s3r6h+3VAlMJ15toAPmybAFkhWE58QcZqI=",
+    "Adapter": "html-head",
+    "TargetFile": "index.html",
+    "Reason": "located frontend index.html",
+    "Evidence": [
+      "index.html"
+    ]
+  },
+  "Findings": []
+}

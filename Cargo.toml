@@ -1,0 +1,54 @@
+[workspace]
+resolver = "2"
+members = [
+    "projects/crates/pm-types",
+    "projects/crates/pm-geometry",
+    "projects/crates/pm-solver",
+    "projects/crates/pm-solver-cpu",
+    "projects/crates/pm-solver-gpu",
+    "projects/crates/pm-view",
+    "projects/crates/pm-wasm",
+    "projects/crates/pm-napi",
+    "projects/crates/pm-svg",
+    "projects/examples/pack-circles-in-disk",
+]
+default-members = [
+    "projects/crates/pm-types",
+    "projects/crates/pm-geometry",
+    "projects/crates/pm-solver",
+    "projects/crates/pm-solver-cpu",
+    "projects/crates/pm-svg",
+    "projects/crates/pm-view",
+]
+
+[workspace.lints.rust]
+missing_docs = "allow"
+
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+license = "MIT"
+authors = ["Packing Man"]
+repository = "https://github.com/oovm/packing-man"
+homepage = "https://github.com/oovm/packing-man"
+readme = "readme.md"
+keywords = ["packing", "optimization", "geometry", "sxo"]
+categories = ["science", "simulation"]
+publish = false
+
+[workspace.dependencies]
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+thiserror = "2"
+pm-types = { path = "projects/crates/pm-types", version = "0.1.0" }
+pm-geometry = { path = "projects/crates/pm-geometry", version = "0.1.0" }
+pm-solver = { path = "projects/crates/pm-solver", version = "0.1.0" }
+pm-solver-cpu = { path = "projects/crates/pm-solver-cpu", version = "0.1.0" }
+pm-solver-gpu = { path = "projects/crates/pm-solver-gpu", version = "0.1.0" }
+pm-svg = { path = "projects/crates/pm-svg", version = "0.1.0" }
+napi = { version = "3.12.1", default-features = true, features = ["napi4"] }
+napi-derive = "3.6.3"
+
+[profile.release]
+lto = true
+panic = "abort"

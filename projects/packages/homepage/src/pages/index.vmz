@@ -1,0 +1,6 @@
+<template>
+    <PackingView />
+</template>
+<script client>
+export default class IndexPage {}
+</script>
