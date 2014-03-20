@@ -8,4 +8,10 @@ pub enum Objective {
     MinBins,
     MaxValue,
     Feasibility,
+    MaxEqualRadius,
+    MaxRadiusSum,
+    MaxMinDistance,
+    MaxTotalPerimeter,
+    MaxVolumeUtilization,
+    MinTransportCost,
 }

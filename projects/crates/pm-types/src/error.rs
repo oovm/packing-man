@@ -19,4 +19,8 @@ pub enum PmError {
     GpuUnavailable,
     #[error("serialization: {0}")]
     Serde(String),
+    #[error("incompatible problem: {0}")]
+    IncompatibleProblem(String),
+    #[error("unsupported shape: {0:?}")]
+    UnsupportedShape(String),
 }
