@@ -1,14 +1,18 @@
-use pm_geometry::circle::{all_feasible, container_area, density, packed_circle_area};
+use pm_geometry::circle::all_feasible;
 use pm_types::{
-    ContainerModel, ItemModel, Objective, Placement2d, Problem, ProblemFamily, Solution,
-    SolutionMetrics, SolveMeta,
+    ContainerModel, ItemModel, Objective, Placement2d, Problem, ProblemFamily,
 };
+
+use crate::common::build_circle_solution;
 
 const MAX_ITERS: u32 = 400;
 const REPULSE: f64 = 0.15;
 const DAMP: f64 = 0.85;
 
-pub fn solve(problem: &Problem) -> Option<Solution> {
+pub fn solve(problem: &Problem) -> Option<pm_types::Solution> {
+    if problem.objective == Objective::MaxRadiusSum {
+        return super::variable_relax::solve(problem);
+    }
     if problem.family != ProblemFamily::CircleSpherePacking {
         return None;
     }
@@ -71,10 +75,16 @@ pub fn solve(problem: &Problem) -> Option<Solution> {
     }
 
     let feasible = all_feasible(&placements, &problem.container);
-    Some(build_solution(problem, placements, feasible, "cpu_force_relax", MAX_ITERS))
+    Some(build_circle_solution(
+        problem,
+        placements,
+        feasible,
+        "cpu_force_relax",
+        MAX_ITERS,
+    ))
 }
 
-fn push_inside_container(
+pub(crate) fn push_inside_container(
     p: &mut Placement2d,
     container: &ContainerModel,
     fx: &mut f64,
@@ -107,38 +117,8 @@ fn push_inside_container(
     }
 }
 
-fn empty_solution(problem: &Problem) -> Solution {
-    build_solution(problem, vec![], true, "cpu_force_relax", 0)
-}
-
-fn build_solution(
-    problem: &Problem,
-    placements: Vec<Placement2d>,
-    feasible: bool,
-    algorithm: &str,
-    iterations: u32,
-) -> Solution {
-    let area = container_area(&problem.container);
-    let count = placements.len() as u32;
-    let dens = density(&placements, &problem.container);
-    let packed = packed_circle_area(&placements);
-    Solution {
-        family: problem.family,
-        placements,
-        metrics: SolutionMetrics {
-            count,
-            density: dens,
-            container_area: area,
-            packed_area: packed,
-        },
-        feasible,
-        meta: SolveMeta {
-            algorithm: algorithm.to_string(),
-            backend: "cpu".to_string(),
-            iterations,
-            elapsed_ms: 0,
-        },
-    }
+fn empty_solution(problem: &Problem) -> pm_types::Solution {
+    build_circle_solution(problem, vec![], true, "cpu_force_relax", 0)
 }
 
 pub fn supports(problem: &Problem) -> bool {

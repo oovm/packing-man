@@ -1,19 +1,24 @@
-use pm_geometry::circle::{all_feasible, container_area, density, packed_circle_area};
+use pm_geometry::circle::all_feasible;
 use pm_types::{
-    ContainerModel, ItemModel, Objective, Placement2d, Problem, ProblemFamily, Solution,
-    SolutionMetrics, SolveMeta,
+    ContainerModel, ItemModel, Objective, Placement2d, Problem, ProblemFamily,
 };
 
-pub fn solve(problem: &Problem) -> Option<Solution> {
+use crate::common::build_circle_solution;
+
+pub fn solve(problem: &Problem) -> Option<pm_types::Solution> {
     if problem.family != ProblemFamily::CircleSpherePacking {
         return None;
     }
     let (radius, count) = match &problem.items.model {
         ItemModel::Circle { radius, count } => (*radius, *count),
+        ItemModel::IdenticalCircles {
+            radius: Some(r),
+            count,
+        } => (*r, *count),
         _ => return None,
     };
     if count == 0 {
-        return Some(empty_solution(problem));
+        return Some(build_circle_solution(problem, vec![], true, "cpu_greedy", 0));
     }
 
     let mut placements = Vec::new();
@@ -51,41 +56,7 @@ pub fn solve(problem: &Problem) -> Option<Solution> {
     }
 
     let feasible = all_feasible(&placements, &problem.container);
-    Some(build_solution(problem, placements, feasible, "cpu_greedy", 0))
-}
-
-fn empty_solution(problem: &Problem) -> Solution {
-    build_solution(problem, vec![], true, "cpu_greedy", 0)
-}
-
-fn build_solution(
-    problem: &Problem,
-    placements: Vec<Placement2d>,
-    feasible: bool,
-    algorithm: &str,
-    iterations: u32,
-) -> Solution {
-    let area = container_area(&problem.container);
-    let count = placements.len() as u32;
-    let dens = density(&placements, &problem.container);
-    let packed = packed_circle_area(&placements);
-    Solution {
-        family: problem.family,
-        placements,
-        metrics: SolutionMetrics {
-            count,
-            density: dens,
-            container_area: area,
-            packed_area: packed,
-        },
-        feasible,
-        meta: SolveMeta {
-            algorithm: algorithm.to_string(),
-            backend: "cpu".to_string(),
-            iterations,
-            elapsed_ms: 0,
-        },
-    }
+    Some(build_circle_solution(problem, placements, feasible, "cpu_greedy", 0))
 }
 
 pub fn supports(problem: &Problem) -> bool {
@@ -93,7 +64,7 @@ pub fn supports(problem: &Problem) -> bool {
         && matches!(problem.objective, Objective::MaxCount)
         && matches!(
             problem.items.model,
-            ItemModel::Circle { .. }
+            ItemModel::Circle { .. } | ItemModel::IdenticalCircles { .. }
         )
         && matches!(
             problem.container,
