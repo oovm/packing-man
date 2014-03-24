@@ -1,0 +1,16 @@
+{
+  "id": "circle_sphere_packing/equal_circles_in_circle/n19",
+  "problem": {
+    "family": "circle_sphere_packing",
+    "archetype": "equal_circles_in_circle",
+    "shape_pair": { "item": "circle", "container": "circle" },
+    "mode": "equal_copies_packing",
+    "objective": "max_count",
+    "items": { "model": { "kind": "circle", "radius": 1.0, "count": 19 } },
+    "container": { "kind": "circle", "radius": 10.0 }
+  },
+  "expect": {
+    "optimality": "proven",
+    "feasible": true
+  }
+}

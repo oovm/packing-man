@@ -1,0 +1,10 @@
+{
+  "fixtures": [
+    "circle_sphere_packing/equal_circles_in_circle/n19.json",
+    "circle_sphere_packing/equal_circles_in_square/n10.json",
+    "circle_sphere_packing/variable_circles_max_sum/unit_square_n26.json",
+    "circle_sphere_packing/variable_circles_in_perim_rect/n21.json",
+    "manufacturer_pallet_loading/one_dim_bin_packing/ffd_tight.json",
+    "manufacturer_pallet_loading/cubes_in_cubes/n8_side3.json"
+  ]
+}

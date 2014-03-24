@@ -1,0 +1,22 @@
+{
+  "id": "manufacturer_pallet_loading/one_dim_bin_packing/ffd_tight",
+  "problem": {
+    "family": "manufacturer_pallet_loading",
+    "archetype": "one_dim_bin_packing",
+    "shape_pair": { "item": "square", "container": "rectangle" },
+    "mode": "equal_copies_packing",
+    "objective": "min_bins",
+    "items": {
+      "model": {
+        "kind": "one_dim_items",
+        "sizes": [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4]
+      }
+    },
+    "container": { "kind": "rectangle", "width": 1.0, "height": 1.0 }
+  },
+  "expect": {
+    "bin_count": 9,
+    "optimality": "tight_approximation",
+    "feasible": true
+  }
+}

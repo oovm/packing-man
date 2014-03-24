@@ -10,6 +10,7 @@ members = [
     "projects/crates/pm-wasm",
     "projects/crates/pm-napi",
     "projects/crates/pm-svg",
+    "projects/crates/pm-benchmark",
     "projects/examples/pack-circles-in-disk",
 ]
 default-members = [
@@ -46,6 +47,7 @@ pm-solver = { path = "projects/crates/pm-solver", version = "0.1.0" }
 pm-solver-cpu = { path = "projects/crates/pm-solver-cpu", version = "0.1.0" }
 pm-solver-gpu = { path = "projects/crates/pm-solver-gpu", version = "0.1.0" }
 pm-svg = { path = "projects/crates/pm-svg", version = "0.1.0" }
+pm-benchmark = { path = "projects/crates/pm-benchmark", version = "0.1.0" }
 napi = { version = "3.12.1", default-features = true, features = ["napi4"] }
 napi-derive = "3.6.3"
 

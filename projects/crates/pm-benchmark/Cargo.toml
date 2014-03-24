@@ -1,0 +1,22 @@
+[package]
+name = "pm-benchmark"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+homepage.workspace = true
+readme = "readme.md"
+keywords.workspace = true
+categories.workspace = true
+publish.workspace = true
+description = "Packing-Man benchmark fixtures and validators"
+
+[dependencies]
+pm-types = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+
+[dev-dependencies]
+pm-geometry = { workspace = true }
+pm-solver = { workspace = true }
