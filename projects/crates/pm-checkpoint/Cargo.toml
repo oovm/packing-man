@@ -1,0 +1,17 @@
+[package]
+name = "pm-checkpoint"
+description = "Packing-Man 求解断点：保存/恢复迭代状态以继续优化"
+readme = "readme.md"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+publish = false
+
+[dependencies]
+pm-types = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+
+[dev-dependencies]
+pm-solver = { workspace = true }
