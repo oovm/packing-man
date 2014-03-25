@@ -1,6 +1,6 @@
 [package]
 name = "pm-solver"
-description = "Packing 求解注册表与调度"
+description = "Packing 求解注册表、架构分派与算法实现"
 readme = "readme.md"
 version.workspace = true
 edition.workspace = true
@@ -8,7 +8,12 @@ license.workspace = true
 authors.workspace = true
 publish = false
 
+[features]
+default = []
+gpu = []
+
 [dependencies]
-pm-solver-cpu = { workspace = true }
-pm-solver-gpu = { workspace = true }
+pm-checkpoint = { workspace = true }
+pm-geometry = { workspace = true }
 pm-types = { workspace = true }
+serde = { workspace = true }

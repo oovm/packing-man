@@ -5,13 +5,42 @@ use pm_types::{
 
 use crate::common::build_circle_solution;
 
-const MAX_ITERS: u32 = 400;
+pub const DEFAULT_MAX_ITERS: u32 = 400;
 const REPULSE: f64 = 0.15;
 const DAMP: f64 = 0.85;
 
+#[derive(Debug, Clone, Default)]
+pub struct RelaxSession {
+    pub initial_placements: Option<Vec<Placement2d>>,
+    pub iter_budget: u32,
+    pub total_iterations_before: u32,
+}
+
+impl RelaxSession {
+    pub fn fresh() -> Self {
+        Self {
+            initial_placements: None,
+            iter_budget: DEFAULT_MAX_ITERS,
+            total_iterations_before: 0,
+        }
+    }
+}
+
 pub fn solve(problem: &Problem) -> Option<pm_types::Solution> {
+    solve_with_session(problem, None)
+}
+
+pub fn solve_with_session(
+    problem: &Problem,
+    session: Option<RelaxSession>,
+) -> Option<pm_types::Solution> {
     if problem.objective == Objective::MaxRadiusSum {
-        return super::variable_relax::solve(problem);
+        let mapped = session.map(|s| super::variable_relax::RelaxSession {
+            initial_placements: s.initial_placements,
+            iter_budget: s.iter_budget,
+            total_iterations_before: s.total_iterations_before,
+        });
+        return super::variable_relax::solve_with_session(problem, mapped);
     }
     if problem.family != ProblemFamily::CircleSpherePacking {
         return None;
@@ -24,20 +53,16 @@ pub fn solve(problem: &Problem) -> Option<pm_types::Solution> {
         return Some(empty_solution(problem));
     }
 
-    let mut placements: Vec<Placement2d> = (0..count)
-        .map(|id| {
-            let angle = (id as f64) * 2.399963;
-            let r = radius * (1.0 + (id as f64) * 0.3);
-            Placement2d {
-                id,
-                cx: r * angle.cos(),
-                cy: r * angle.sin(),
-                radius,
-            }
-        })
-        .collect();
+    let session = session.unwrap_or_else(RelaxSession::fresh);
+    let max_iters = session.iter_budget.max(1);
+    let mut placements = session
+        .initial_placements
+        .filter(|p| p.len() == count as usize)
+        .unwrap_or_else(|| spiral_init(radius, count));
 
-    for _iter in 0..MAX_ITERS {
+    let mut ran_iters = 0u32;
+    for _iter in 0..max_iters {
+        ran_iters += 1;
         let mut moved = false;
         for i in 0..placements.len() {
             let mut fx = 0.0;
@@ -74,14 +99,30 @@ pub fn solve(problem: &Problem) -> Option<pm_types::Solution> {
         }
     }
 
+    let total_iters = session.total_iterations_before + ran_iters;
     let feasible = all_feasible(&placements, &problem.container);
     Some(build_circle_solution(
         problem,
         placements,
         feasible,
         "cpu_force_relax",
-        MAX_ITERS,
+        total_iters,
     ))
+}
+
+fn spiral_init(radius: f64, count: u32) -> Vec<Placement2d> {
+    (0..count)
+        .map(|id| {
+            let angle = (id as f64) * 2.399963;
+            let r = radius * (1.0 + (id as f64) * 0.3);
+            Placement2d {
+                id,
+                cx: r * angle.cos(),
+                cy: r * angle.sin(),
+                radius,
+            }
+        })
+        .collect()
 }
 
 pub(crate) fn push_inside_container(

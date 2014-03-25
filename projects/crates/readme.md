@@ -7,15 +7,14 @@
 |--------------------------------------------|----------------------------------------------|
 | [`pm-types`](pm-types/readme.md)           | `ProblemFamily`、Problem、Solution、SolverId |
 | [`pm-geometry`](pm-geometry/readme.md)     | 圆/矩形/凸域几何谓词                         |
-| [`pm-solver-cpu`](pm-solver-cpu/readme.md) | CPU 贪心 / 力松弛                            |
-| [`pm-solver-gpu`](pm-solver-gpu/readme.md) | GPU 力松弛（feature `gpu`）                  |
-| [`pm-solver`](pm-solver/readme.md)         | 求解注册表                                   |
+| [`pm-checkpoint`](pm-checkpoint/readme.md) | 迭代断点 JSON + 续跑                         |
+| [`pm-solver`](pm-solver/readme.md)         | `SolverArch` + 算法实现 + 注册表             |
 | [`pm-svg`](pm-svg/readme.md)               | SVG 可视化                                   |
-| [`pm-view`](pm-view/readme.md)             | CLI                                          |
+| [`pm-benchmark`](pm-benchmark/readme.md)   | 分类基准 fixtures + 回归                     |
 | [`pm-wasm`](pm-wasm/readme.md)             | Wasm cdylib                                  |
 | [`pm-napi`](pm-napi/readme.md)             | Node N-API                                   |
 
 ```bash
 cargo check --workspace
-cargo run -p pm-view -- out.svg --count 19
+pnpm --filter @sxo/packing exec packing out.svg --count 19
 ```

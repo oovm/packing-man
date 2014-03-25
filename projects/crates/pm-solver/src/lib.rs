@@ -1,12 +1,23 @@
-//! 求解注册表与调度。
+//! 求解注册表、架构分派与算法实现。
 
+mod arch;
+mod box3d;
+mod circle;
+mod common;
 mod compat;
+mod one_dim;
+mod resume;
+mod strip;
 
 use std::time::Instant;
 
+use pm_checkpoint::SolveResume;
 use pm_types::{
-    normalize_problem, Backend, PmError, PmResult, Problem, ProblemFamily, Solution, SolverId,
+    normalize_problem, PmError, PmResult, Problem, ProblemFamily, Solution, SolverId,
 };
+
+pub use arch::{gpu_available, SolverArch};
+pub use resume::{solve_resume, SolveResumeResult};
 
 pub fn solve(problem: &Problem, solver: SolverId) -> PmResult<Solution> {
     let mut normalized = problem.clone();
@@ -22,10 +33,7 @@ pub fn solve(problem: &Problem, solver: SolverId) -> PmResult<Solution> {
     }
 
     let start = Instant::now();
-    let solution = match solver.backend {
-        Backend::Cpu => pm_solver_cpu::solve(&normalized, solver),
-        Backend::Gpu => pm_solver_gpu::solve(&normalized, solver),
-    };
+    let solution = arch::solve_with_resume(&normalized, solver, None);
     let elapsed = start.elapsed().as_millis() as u64;
 
     match solution {
@@ -40,10 +48,26 @@ pub fn solve(problem: &Problem, solver: SolverId) -> PmResult<Solution> {
     }
 }
 
+pub fn solve_with_checkpoint(
+    problem: &Problem,
+    solver: SolverId,
+    request: SolveResume,
+) -> PmResult<SolveResumeResult> {
+    solve_resume(problem, solver, request)
+}
+
 pub struct Registry;
 
 impl Registry {
     pub fn solve(problem: &Problem, solver: SolverId) -> PmResult<Solution> {
         solve(problem, solver)
+    }
+
+    pub fn solve_with_checkpoint(
+        problem: &Problem,
+        solver: SolverId,
+        request: SolveResume,
+    ) -> PmResult<SolveResumeResult> {
+        solve_with_checkpoint(problem, solver, request)
     }
 }

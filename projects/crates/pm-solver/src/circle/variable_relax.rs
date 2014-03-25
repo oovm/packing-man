@@ -6,11 +6,35 @@ use pm_types::{
 use super::force_relax::push_inside_container;
 use crate::common::build_circle_solution;
 
-const MAX_ITERS: u32 = 600;
+pub const DEFAULT_MAX_ITERS: u32 = 600;
 const REPULSE: f64 = 0.12;
 const GROW: f64 = 0.02;
 
+#[derive(Debug, Clone, Default)]
+pub struct RelaxSession {
+    pub initial_placements: Option<Vec<Placement2d>>,
+    pub iter_budget: u32,
+    pub total_iterations_before: u32,
+}
+
+impl RelaxSession {
+    pub fn fresh() -> Self {
+        Self {
+            initial_placements: None,
+            iter_budget: DEFAULT_MAX_ITERS,
+            total_iterations_before: 0,
+        }
+    }
+}
+
 pub fn solve(problem: &Problem) -> Option<pm_types::Solution> {
+    solve_with_session(problem, None)
+}
+
+pub fn solve_with_session(
+    problem: &Problem,
+    session: Option<RelaxSession>,
+) -> Option<pm_types::Solution> {
     if problem.family != ProblemFamily::CircleSpherePacking {
         return None;
     }
@@ -23,21 +47,16 @@ pub fn solve(problem: &Problem) -> Option<pm_types::Solution> {
         return Some(build_circle_solution(problem, vec![], true, "variable_relax", 0));
     }
 
-    let init_r = 0.05;
-    let mut placements: Vec<Placement2d> = (0..count)
-        .map(|id| {
-            let angle = (id as f64) * 2.399963;
-            let rr = 0.3 + (id as f64) * 0.02;
-            Placement2d {
-                id,
-                cx: 0.5 + rr * angle.cos(),
-                cy: 0.5 + rr * angle.sin(),
-                radius: init_r,
-            }
-        })
-        .collect();
+    let session = session.unwrap_or_else(RelaxSession::fresh);
+    let max_iters = session.iter_budget.max(1);
+    let mut placements = session
+        .initial_placements
+        .filter(|p| p.len() == count as usize)
+        .unwrap_or_else(|| spiral_init(count));
 
-    for iter in 0..MAX_ITERS {
+    let mut ran_iters = 0u32;
+    for iter in 0..max_iters {
+        ran_iters += 1;
         let mut moved = false;
         for i in 0..placements.len() {
             let mut fx = 0.0;
@@ -90,11 +109,34 @@ pub fn solve(problem: &Problem) -> Option<pm_types::Solution> {
     }
 
     normalize_to_unit_square(&mut placements, &problem.container);
+    let total_iters = session.total_iterations_before + ran_iters;
     let feasible = all_feasible(&placements, &problem.container);
-    let mut sol = build_circle_solution(problem, placements, feasible, "variable_relax", MAX_ITERS);
+    let mut sol = build_circle_solution(
+        problem,
+        placements,
+        feasible,
+        "variable_relax",
+        total_iters,
+    );
     sol.metrics.radius_sum = radius_sum(&sol.placements);
     sol.metrics.objective_value = sol.metrics.radius_sum;
     Some(sol)
+}
+
+fn spiral_init(count: u32) -> Vec<Placement2d> {
+    let init_r = 0.05;
+    (0..count)
+        .map(|id| {
+            let angle = (id as f64) * 2.399963;
+            let rr = 0.3 + (id as f64) * 0.02;
+            Placement2d {
+                id,
+                cx: 0.5 + rr * angle.cos(),
+                cy: 0.5 + rr * angle.sin(),
+                radius: init_r,
+            }
+        })
+        .collect()
 }
 
 fn normalize_to_unit_square(placements: &mut [Placement2d], container: &ContainerModel) {
