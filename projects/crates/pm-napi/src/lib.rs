@@ -8,13 +8,14 @@ use pm_types::{Problem, SolverId};
 
 #[napi]
 pub fn pm_version_code() -> u32 {
-    0_002_000
+    0_003_000
 }
 
 #[napi]
 pub fn solve_packing_json(problem_json: String, solver_json: String) -> Result<String> {
-    let problem: Problem = serde_json::from_str(&problem_json)
+    let mut problem: Problem = serde_json::from_str(&problem_json)
         .map_err(|e| Error::from_reason(format!("problem json: {e}")))?;
+    pm_types::normalize_problem(&mut problem);
     let solver: SolverId = serde_json::from_str(&solver_json)
         .map_err(|e| Error::from_reason(format!("solver json: {e}")))?;
     let solution = solve(&problem, solver).map_err(|e| Error::from_reason(format!("{e}")))?;

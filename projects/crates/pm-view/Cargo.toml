@@ -13,6 +13,7 @@ name = "pm-view"
 path = "src/main.rs"
 
 [dependencies]
+pm-benchmark = { workspace = true }
 pm-solver = { workspace = true }
 pm-svg = { workspace = true }
 pm-types = { workspace = true }

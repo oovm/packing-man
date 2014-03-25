@@ -4,7 +4,7 @@ use pm_solver::solve;
 use pm_svg::render;
 use pm_types::{Problem, SolverId};
 
-pub const VERSION_CODE: u32 = 0_002_000;
+pub const VERSION_CODE: u32 = 0_003_000;
 
 #[unsafe(no_mangle)]
 pub extern "C" fn pm_version_code() -> u32 {
