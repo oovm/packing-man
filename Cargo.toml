@@ -6,12 +6,10 @@ members = [
     "projects/crates/pm-solver",
     "projects/crates/pm-solver-cpu",
     "projects/crates/pm-solver-gpu",
-    "projects/crates/pm-view",
     "projects/crates/pm-wasm",
     "projects/crates/pm-napi",
     "projects/crates/pm-svg",
     "projects/crates/pm-benchmark",
-    "projects/examples/pack-circles-in-disk",
 ]
 default-members = [
     "projects/crates/pm-types",
@@ -19,7 +17,6 @@ default-members = [
     "projects/crates/pm-solver",
     "projects/crates/pm-solver-cpu",
     "projects/crates/pm-svg",
-    "projects/crates/pm-view",
 ]
 
 [workspace.lints.rust]
