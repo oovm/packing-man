@@ -18,7 +18,11 @@ export async function loadPmWasm(options: LoadPmWasmOptions = {}): Promise<PmWas
     }
     let instance: WebAssembly.Instance;
     if (options.module) {
-        instance = (await WebAssembly.instantiate(options.module, {})).instance;
+        const instantiated: unknown = await WebAssembly.instantiate(options.module, {});
+        instance =
+            instantiated instanceof WebAssembly.Instance
+                ? instantiated
+                : (instantiated as WebAssembly.WebAssemblyInstantiatedSource).instance;
     } else {
         const result = await WebAssembly.instantiateStreaming(fetch(options.wasmUrl!.toString()), {});
         instance = result.instance;

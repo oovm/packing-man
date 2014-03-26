@@ -2,9 +2,11 @@ export {
     pmNodeRustTarget,
     loadPmNapi,
     solvePackingNode,
+    solvePackingResumeNode,
     renderSvgNode,
 } from "./load.js";
-export type { PmNapiBindings } from "./load.js";
+export type { PmNapiBindings, SolveResumeOptions } from "./load.js";
+export type { Checkpoint, SolveResumeResult } from "../checkpoint.js";
 export type { Problem, Solution, SolverId } from "../problem.js";
 export {
     ProblemFamily,

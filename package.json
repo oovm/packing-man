@@ -8,7 +8,7 @@
         "postinstall": "node ./scripts/ensure-vmz-host-manifest.mjs",
         "check": "cargo check --workspace && cargo test --workspace",
         "test": "cargo test --workspace",
-        "render": "cargo run -p pm-view -- packing.png --width 800 --height 450",
+        "render": "pnpm --filter @sxo/packing exec packing packing.svg --container-r 10 --circle-r 1 --count 19 --algorithm force",
         "build:wasm": "node ./scripts/build-wasm.mjs",
         "build:napi": "node ./scripts/build-napi.mjs",
         "build:ts": "pnpm --filter @sxo/packing run build && pnpm --filter @sxo/packing-unknown-wasm32 run build",

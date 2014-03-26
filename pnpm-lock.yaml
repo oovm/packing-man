@@ -45,12 +45,34 @@ importers:
 
   projects/packages/packing:
     devDependencies:
+      '@types/node':
+        specifier: ^22.10.0
+        version: 22.20.4
       '@webgpu/types':
         specifier: ^0.1.60
         version: 0.1.74
       typescript:
         specifier: 'catalog:'
         version: 5.9.3
+    optionalDependencies:
+      '@sxo/packing-darwin-arm64':
+        specifier: workspace:*
+        version: link:../packing-darwin-arm64
+      '@sxo/packing-darwin-x64':
+        specifier: workspace:*
+        version: link:../packing-darwin-x64
+      '@sxo/packing-linux-arm64':
+        specifier: workspace:*
+        version: link:../packing-linux-arm64
+      '@sxo/packing-linux-x64':
+        specifier: workspace:*
+        version: link:../packing-linux-x64
+      '@sxo/packing-win32-arm64':
+        specifier: workspace:*
+        version: link:../packing-win32-arm64
+      '@sxo/packing-win32-x64':
+        specifier: workspace:*
+        version: link:../packing-win32-x64
 
   projects/packages/packing-darwin-arm64: {}
 

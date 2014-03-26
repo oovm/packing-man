@@ -4,6 +4,9 @@
     "description": "SXO packing host: wasm + node loaders",
     "type": "module",
     "license": "MIT",
+    "bin": {
+        "packing": "./bin/packing.mjs"
+    },
     "exports": {
         "./wasm": {
             "types": "./dist/wasm/index.d.ts",
@@ -16,11 +19,20 @@
             "default": "./dist/node/index.js"
         }
     },
-    "files": ["dist"],
+    "files": ["dist", "bin"],
     "scripts": {
         "build": "node ../../../scripts/run-tsc.mjs tsconfig.json"
     },
+    "optionalDependencies": {
+        "@sxo/packing-darwin-arm64": "workspace:*",
+        "@sxo/packing-darwin-x64": "workspace:*",
+        "@sxo/packing-linux-arm64": "workspace:*",
+        "@sxo/packing-linux-x64": "workspace:*",
+        "@sxo/packing-win32-arm64": "workspace:*",
+        "@sxo/packing-win32-x64": "workspace:*"
+    },
     "devDependencies": {
+        "@types/node": "^22.10.0",
         "@webgpu/types": "^0.1.60",
         "typescript": "catalog:"
     },

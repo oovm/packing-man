@@ -10,6 +10,6 @@
 | [`packing-darwin-arm64`](packing-darwin-arm64/readme.md)     | `@sxo/packing-darwin-arm64`   | native 平台袋                      |
 | [`packing-linux-x64`](packing-linux-x64/readme.md)           | `@sxo/packing-linux-x64`      | native 平台袋                      |
 | [`packing-linux-arm64`](packing-linux-arm64/readme.md)       | `@sxo/packing-linux-arm64`    | native 平台袋                      |
-| [`homepage`](homepage/readme.md)                             | `@sxo/packing-homepage`       | VMZ 演示（仅依赖 wasm 袋）         |
+| [`homepage`](homepage/readme.md)                             | `@sxo/packing-homepage`       | VMZ 多页演示（`/` `/demo` `/fixtures` `/about`） |
 
 Rust 绑定：`../crates/pm-wasm`、`../crates/pm-napi`。

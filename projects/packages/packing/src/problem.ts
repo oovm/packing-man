@@ -22,6 +22,12 @@ export type Objective = (typeof Objective)[keyof typeof Objective];
 export const AlgorithmKind = {
     greedy_insertion: "greedy_insertion",
     force_relaxation: "force_relaxation",
+    analytical_concentric_ring: "analytical_concentric_ring",
+    nlp_local_search: "nlp_local_search",
+    first_fit_decreasing: "first_fit_decreasing",
+    best_fit_decreasing: "best_fit_decreasing",
+    skyline_strip: "skyline_strip",
+    extreme_point_blf: "extreme_point_blf",
     nlp_sqp: "nlp_sqp",
     gpu_force_relaxation: "gpu_force_relaxation",
 } as const;
@@ -48,6 +54,31 @@ export const SolverPresets = {
         backend: Backend.cpu,
         algorithm: AlgorithmKind.force_relaxation,
     },
+    cpuConcentric: {
+        family: ProblemFamily.circle_sphere_packing,
+        backend: Backend.cpu,
+        algorithm: AlgorithmKind.analytical_concentric_ring,
+    },
+    cpuNlp: {
+        family: ProblemFamily.circle_sphere_packing,
+        backend: Backend.cpu,
+        algorithm: AlgorithmKind.nlp_local_search,
+    },
+    cpuFfd: {
+        family: ProblemFamily.manufacturer_pallet_loading,
+        backend: Backend.cpu,
+        algorithm: AlgorithmKind.first_fit_decreasing,
+    },
+    cpuSkyline: {
+        family: ProblemFamily.manufacturer_pallet_loading,
+        backend: Backend.cpu,
+        algorithm: AlgorithmKind.skyline_strip,
+    },
+    cpuExtremePoint: {
+        family: ProblemFamily.manufacturer_pallet_loading,
+        backend: Backend.cpu,
+        algorithm: AlgorithmKind.extreme_point_blf,
+    },
     gpuForce: {
         family: ProblemFamily.circle_sphere_packing,
         backend: Backend.gpu,
@@ -61,6 +92,7 @@ export interface ItemSpec {
 
 export interface Problem {
     family: ProblemFamily;
+    archetype?: string;
     objective: Objective;
     items: ItemSpec;
     container: { kind: "circle"; radius: number } | { kind: "rectangle"; width: number; height: number };

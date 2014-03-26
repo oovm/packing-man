@@ -6,7 +6,13 @@
 
 ```bash
 cargo check --workspace
-cargo run -p pm-view -- result.svg --container-r 10 --circle-r 1 --count 19 --algorithm force
+pnpm run build:napi
+pnpm run build:ts
+pnpm --filter @sxo/packing exec packing result.svg --container-r 10 --circle-r 1 --count 19 --algorithm force
+
+# 断点续跑（力松弛 / 可变半径）
+node projects/packages/packing/bin/packing.mjs out.svg --algorithm force --checkpoint-out run.cp.json --iter-budget 200
+node projects/packages/packing/bin/packing.mjs out.svg --algorithm force --checkpoint-in run.cp.json --checkpoint-out run.cp.json --iter-budget 400
 ```
 
 ## Crate 分层
@@ -14,12 +20,10 @@ cargo run -p pm-view -- result.svg --container-r 10 --circle-r 1 --count 19 --al
 ```text
 pm-types          ← 问题分类合同（Birgin 四族）
 pm-geometry       ← 几何谓词（circle / orthogonal / convex / sphere）
-pm-solver-cpu     ← CPU 算法
-pm-solver-gpu     ← GPU 算法（feature gpu）
-pm-solver         ← 注册表 + 调度
+pm-solver         ← `SolverArch` trait（CPU/GPU）+ 算法 + 调度
 pm-svg            ← Solution → SVG
-pm-view           ← CLI
 pm-wasm / pm-napi ← Wasm / Node 绑定
+@sxo/packing      ← CLI（`packing` 命令）
 ```
 
 ## 仓库布局

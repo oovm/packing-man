@@ -4,7 +4,6 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
-const manifest = join(root, "Cargo.toml");
 const packagesDir = join(root, "projects/packages");
 
 /** @type {Array<{ hostKey: string, target?: string, cargoRel: string, bag: string, fileName: string }>} */
@@ -76,7 +75,7 @@ function copyOne(entry) {
 }
 
 function buildOne(entry) {
-    const args = ["build", "-p", "pm-napi", "--manifest-path", manifest, "--release"];
+    const args = ["build", "-p", "pm-napi", "--release"];
     if (entry.target) {
         args.push("--target", entry.target);
     }
