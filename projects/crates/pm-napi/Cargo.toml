@@ -15,6 +15,7 @@ path = "src/lib.rs"
 [dependencies]
 napi = { workspace = true }
 napi-derive = { workspace = true }
+pm-checkpoint = { workspace = true }
 pm-solver = { workspace = true }
 pm-svg = { workspace = true }
 pm-types = { workspace = true }
