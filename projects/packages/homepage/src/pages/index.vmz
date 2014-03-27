@@ -1,5 +1,29 @@
 <template>
-    <PackingView />
+    <section class="hero">
+        <p class="hero-kicker">Packing-Man · Wasm</p>
+        <h1 class="page-title">几何排样，在浏览器里可交互求解</h1>
+        <p class="page-lede">
+            基于 Birgin 四族问题分类与 <code>pm-wasm</code> 运行时。调整圆盘参数或加载基准实例，即时得到 SVG 布局与密度指标。
+        </p>
+        <div class="btn-row">
+            <a data-vmz-route href="/demo" class="btn btn--primary">打开交互演示</a>
+            <a data-vmz-route href="/fixtures" class="btn btn--ghost">浏览基准实例</a>
+        </div>
+    </section>
+    <section class="card-grid">
+        <article class="card">
+            <h3>圆球排样</h3>
+            <p>等圆 / 可变半径、圆盘与正方形容器。力松弛、贪心、同心环解析。</p>
+        </article>
+        <article class="card">
+            <h3>托盘装箱</h3>
+            <p>1D FFD、2D 条带 Skyline、3D 极点法。按 <code>ProblemArchetype</code> 自动路由算法。</p>
+        </article>
+        <article class="card">
+            <h3>断点续跑</h3>
+            <p>CLI 支持 <code>--checkpoint-in/out</code>，迭代求解可从上次布局继续优化。</p>
+        </article>
+    </section>
 </template>
 <script client>
 export default class IndexPage {}

@@ -1,0 +1,10 @@
+<template>
+    <section>
+        <h1 class="page-title">交互演示</h1>
+        <p class="page-lede">在浏览器内通过 Wasm 调用 <code>pm-solver</code>，结果以 SVG 渲染。可从基准页带 <code>?fixture=</code> 参数进入。</p>
+        <PackingView />
+    </section>
+</template>
+<script client>
+export default class DemoPage {}
+</script>

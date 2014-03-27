@@ -1,0 +1,17 @@
+{
+  "id": "circle_sphere_packing/variable_circles_in_perim_rect/n21",
+  "problem": {
+    "family": "circle_sphere_packing",
+    "archetype": "variable_circles_in_perim_rect",
+    "shape_pair": { "item": "circle", "container": "rectangle" },
+    "mode": "equal_copies_packing",
+    "objective": "max_radius_sum",
+    "items": { "model": { "kind": "variable_circles", "count": 21 } },
+    "container": { "kind": "perimeter_bounded_rectangle", "perimeter": 4.0 }
+  },
+  "expect": {
+    "objective_record": 2.36583237,
+    "optimality": "record",
+    "feasible": true
+  }
+}

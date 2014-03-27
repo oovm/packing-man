@@ -1,0 +1,17 @@
+{
+  "id": "circle_sphere_packing/equal_circles_in_square/n10",
+  "problem": {
+    "family": "circle_sphere_packing",
+    "archetype": "equal_circles_in_square",
+    "shape_pair": { "item": "circle", "container": "square" },
+    "mode": "equal_copies_packing",
+    "objective": "max_equal_radius",
+    "items": { "model": { "kind": "identical_circles", "count": 10, "radius": null } },
+    "container": { "kind": "rectangle", "width": 1.0, "height": 1.0 }
+  },
+  "expect": {
+    "objective_record": 0.1482043,
+    "optimality": "record",
+    "feasible": true
+  }
+}

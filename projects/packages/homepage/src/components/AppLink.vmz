@@ -1,0 +1,16 @@
+<template>
+    <a data-vmz-route :href="href" :class="linkClass">
+        {{ label }}
+    </a>
+</template>
+<script client>
+export default class AppLink {
+    href = "/";
+    label = "";
+    active = false;
+
+    get linkClass() {
+        return this.active ? "nav-link nav-link--active" : "nav-link";
+    }
+}
+</script>

@@ -1,6 +1,146 @@
 <template>
-    <slot />
+    <div class="app-shell">
+        <SiteNav />
+        <main class="app-main">
+            <slot />
+        </main>
+        <footer class="app-footer">
+            <span>Packing-Man · Birgin 四族 · Wasm 求解</span>
+        </footer>
+    </div>
 </template>
+<style>
+:root {
+    --pm-bg: #f4f6f8;
+    --pm-surface: #fafbfc;
+    --pm-ink: #1a2332;
+    --pm-muted: #5c6b7a;
+    --pm-border: #d8dee6;
+    --pm-accent: #2563eb;
+    --pm-accent-soft: #dbeafe;
+    --pm-card: #ffffff;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--pm-bg); color: var(--pm-ink); }
+
+.app-shell {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    font-family: "Segoe UI", system-ui, sans-serif;
+}
+
+.app-main {
+    flex: 1;
+    width: min(1100px, 100%);
+    margin: 0 auto;
+    padding: 1.25rem 1rem 2rem;
+}
+
+.app-footer {
+    padding: 1rem;
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--pm-muted);
+    border-top: 1px solid var(--pm-border);
+}
+
+.site-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.75rem 1rem;
+    background: var(--pm-card);
+    border-bottom: 1px solid var(--pm-border);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    text-decoration: none;
+    color: var(--pm-ink);
+    font-weight: 700;
+}
+
+.brand-mark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 8px;
+    background: var(--pm-accent);
+    color: #fff;
+    font-size: 0.75rem;
+}
+
+.site-nav { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+
+.nav-link {
+    padding: 0.4rem 0.75rem;
+    border-radius: 999px;
+    text-decoration: none;
+    color: var(--pm-muted);
+    font-size: 0.9rem;
+    transition: background 0.15s, color 0.15s;
+}
+
+.nav-link:hover { background: var(--pm-accent-soft); color: var(--pm-accent); }
+.nav-link--active { background: var(--pm-accent-soft); color: var(--pm-accent); font-weight: 600; }
+
+.page-title { margin: 0 0 0.35rem; font-size: clamp(1.5rem, 3vw, 2rem); }
+.page-lede { margin: 0 0 1.5rem; color: var(--pm-muted); max-width: 52ch; line-height: 1.55; }
+
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1rem;
+}
+
+.card {
+    background: var(--pm-card);
+    border: 1px solid var(--pm-border);
+    border-radius: 12px;
+    padding: 1.1rem 1.15rem;
+}
+
+.card h3 { margin: 0 0 0.5rem; font-size: 1rem; }
+.card p { margin: 0; color: var(--pm-muted); font-size: 0.9rem; line-height: 1.5; }
+
+.btn-row { display: flex; flex-wrap: wrap; gap: 0.65rem; margin-top: 1.25rem; }
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.55rem 1rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.btn--primary { background: var(--pm-accent); color: #fff; }
+.btn--ghost { background: #fff; color: var(--pm-ink); border: 1px solid var(--pm-border); }
+
+.hero {
+    padding: 1.5rem 0 2rem;
+}
+
+.hero-kicker {
+    margin: 0 0 0.5rem;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--pm-accent);
+    font-weight: 600;
+}
+</style>
 <script client>
 export default class Application {}
 </script>

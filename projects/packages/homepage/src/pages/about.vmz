@@ -1,0 +1,27 @@
+<template>
+    <section>
+        <h1 class="page-title">关于 Packing-Man</h1>
+        <p class="page-lede">SXO 几何排样研究栈：Rust <code>pm-*</code> crates + <code>@sxo/packing</code> 宿主（Wasm / N-API）。</p>
+        <div class="card-grid">
+            <article class="card">
+                <h3>问题分类</h3>
+                <p>一级 <code>ProblemFamily</code>（Birgin 四族）+ 二级 <code>ShapePair</code> / <code>ProblemMode</code> + 三级 <code>ProblemArchetype</code>。</p>
+            </article>
+            <article class="card">
+                <h3>Crate 分层</h3>
+                <p><code>pm-types</code> 合同 → <code>pm-geometry</code> 谓词 → <code>pm-solver</code>（<code>SolverArch</code> CPU/GPU）→ <code>pm-svg</code> 可视化。</p>
+            </article>
+            <article class="card">
+                <h3>本站点</h3>
+                <p>VMZ 多页应用：<code>/</code> 首页、<code>/demo</code> 求解、<code>/fixtures</code> 基准、<code>/about</code> 说明。路由由 VMZ <code>client-nav</code> 接管。</p>
+            </article>
+        </div>
+        <div class="btn-row">
+            <a data-vmz-route href="/demo" class="btn btn--primary">开始演示</a>
+            <a href="https://github.com/oovm/packing-man" class="btn btn--ghost" target="_blank" rel="noopener">GitHub</a>
+        </div>
+    </section>
+</template>
+<script client>
+export default class AboutPage {}
+</script>

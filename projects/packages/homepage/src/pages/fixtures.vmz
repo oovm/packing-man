@@ -1,0 +1,45 @@
+<template>
+    <section>
+        <h1 class="page-title">基准实例</h1>
+        <p class="page-lede">与 <code>pm-benchmark</code> 分类目录一致。点击卡片在演示页加载完整 <code>Problem</code> JSON 并求解。</p>
+        <div class="fixture-grid">
+            <article v-for="item in fixtures" :key="item.id" class="fixture-card">
+                <h3>{{ item.title }}</h3>
+                <p class="fixture-meta">{{ item.family }} · {{ item.archetype }}</p>
+                <p>{{ item.note }}</p>
+                <a data-vmz-route :href="demoHref(item.id)" class="btn btn--primary fixture-open">在 Demo 中打开</a>
+            </article>
+        </div>
+    </section>
+</template>
+<style scoped>
+.fixture-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem;
+}
+.fixture-card {
+    background: var(--pm-card);
+    border: 1px solid var(--pm-border);
+    border-radius: 12px;
+    padding: 1rem 1.1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+.fixture-card h3 { margin: 0; font-size: 1rem; }
+.fixture-card p { margin: 0; color: var(--pm-muted); font-size: 0.875rem; line-height: 1.45; }
+.fixture-meta { font-family: ui-monospace, monospace; font-size: 0.75rem !important; }
+.fixture-open { margin-top: 0.65rem; align-self: flex-start; }
+</style>
+<script client>
+import { FIXTURES } from "../lib/fixtures-catalog";
+
+export default class FixturesPage {
+    fixtures = FIXTURES;
+
+    demoHref(id) {
+        return `/demo?fixture=${encodeURIComponent(id)}`;
+    }
+}
+</script>
