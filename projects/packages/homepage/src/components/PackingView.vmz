@@ -51,8 +51,8 @@
 }
 </style>
 <script client>
-import { runFixtureDemo, runPackingDemo } from "../lib/packing-frame";
-import { fixtureJsonUrl } from "../lib/fixtures-catalog";
+import { runFixtureDemo, runPackingDemo } from "../lib/packing-frame.js";
+import { fixtureJsonUrl } from "../lib/fixtures-catalog.js";
 
 export default class PackingView {
     containerR = 10;

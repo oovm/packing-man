@@ -33,7 +33,7 @@
 .fixture-open { margin-top: 0.65rem; align-self: flex-start; }
 </style>
 <script client>
-import { FIXTURES } from "../lib/fixtures-catalog";
+import { FIXTURES } from "../lib/fixtures-catalog.js";
 
 export default class FixturesPage {
     fixtures = FIXTURES;

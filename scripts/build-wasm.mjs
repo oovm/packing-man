@@ -4,7 +4,6 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
-const manifest = join(root, "Cargo.toml");
 const wasmTarget = "wasm32-unknown-unknown";
 const cargoWasm = join(root, "target", wasmTarget, "release", "pm_wasm.wasm");
 const bagWasm = join(root, "projects/packages/packing-unknown-wasm32/lib/pm_wasm_bg.wasm");
@@ -30,10 +29,11 @@ function copyWasm() {
 }
 
 if (!copyOnly) {
-    execSync(
-        `cargo build -p pm-wasm --manifest-path "${manifest}" --target ${wasmTarget} --release`,
-        { cwd: root, stdio: "inherit", shell: true },
-    );
+    execSync(`cargo build -p pm-wasm --target ${wasmTarget} --release`, {
+        cwd: root,
+        stdio: "inherit",
+        shell: true,
+    });
 }
 
 copyWasm();

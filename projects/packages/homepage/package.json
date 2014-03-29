@@ -4,8 +4,8 @@
     "private": true,
     "type": "module",
     "scripts": {
-        "predev": "node ../../../scripts/ensure-vmz-host-manifest.mjs && pnpm --filter @sxo/packing run build && node ../../../scripts/build-wasm.mjs --copy-only --copy-homepage",
-        "prebuild": "node ../../../scripts/ensure-vmz-host-manifest.mjs && pnpm --filter @sxo/packing run build && node ../../../scripts/build-wasm.mjs --copy-only --copy-homepage",
+        "predev": "node ../../../scripts/ensure-vmz-host-manifest.mjs && pnpm --filter @sxo/packing run build && node ../../../scripts/build-wasm.mjs --copy-homepage",
+        "prebuild": "node ../../../scripts/ensure-vmz-host-manifest.mjs && pnpm --filter @sxo/packing run build && node ../../../scripts/build-wasm.mjs --copy-homepage",
         "precheck": "node ../../../scripts/ensure-vmz-host-manifest.mjs",
         "check": "vmz check .",
         "dev": "vmz dev .",

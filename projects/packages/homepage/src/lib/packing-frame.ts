@@ -1,13 +1,13 @@
 import {
     SolverPresets,
     circlesInDisk,
-    loadPmWasmPlatform,
+    loadPmWasm,
     renderSvgWasm,
     solvePackingWasm,
     type Problem,
     type Solution,
     type SolverId,
-} from "@sxo/packing-unknown-wasm32";
+} from "@sxo/packing/wasm";
 
 const WASM_URL = "/pm_wasm_bg.wasm";
 
@@ -92,7 +92,7 @@ async function solveAndPaint(
     problem: Problem,
     solver: SolverId,
 ): Promise<PackResult> {
-    const wasm = await loadPmWasmPlatform({ wasmUrl: WASM_URL });
+    const wasm = await loadPmWasm({ wasmUrl: WASM_URL });
     const solution = (await solvePackingWasm(wasm, problem, solver)) as Solution;
     const svg = await renderSvgWasm(wasm, problem, solution);
     host.innerHTML = svg;
