@@ -1,6 +1,14 @@
-export { pmWasmRustTarget, loadPmWasm, solvePackingWasm, renderSvgWasm } from "./load.js";
-export type { LoadPmWasmOptions, PmWasmBindings } from "./load.js";
+export {
+    pmWasmRustTarget,
+    loadPmWasm,
+    solvePackingWasm,
+    solvePackingResumeWasm,
+    renderSvgWasm,
+} from "./load.js";
+export type { LoadPmWasmOptions, PmWasmBindings, SolveResumeWasmOptions } from "./load.js";
+export type { Checkpoint, SolveResumeResult } from "../checkpoint.js";
 export type { Problem, Solution, SolverId } from "../problem.js";
+export { isResumableSolver, solverFromAlgorithmFlag, solverForProblem } from "../solver.js";
 export {
     ProblemFamily,
     Objective,

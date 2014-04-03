@@ -1,8 +1,11 @@
 export const pmWasmRustTarget = "wasm32-unknown-unknown" as const;
 
+import type { Checkpoint, SolveResumeResult } from "../checkpoint.js";
+
 export interface PmWasmBindings {
     pm_version_code: () => number;
     pm_solve_json: (inPtr: number, inLen: number, outPtr: number, outCap: number) => number;
+    pm_solve_resume_json: (inPtr: number, inLen: number, outPtr: number, outCap: number) => number;
     pm_render_svg: (inPtr: number, inLen: number, outPtr: number, outCap: number) => number;
     memory: WebAssembly.Memory;
 }
@@ -24,11 +27,22 @@ export async function loadPmWasm(options: LoadPmWasmOptions = {}): Promise<PmWas
                 ? instantiated
                 : (instantiated as WebAssembly.WebAssemblyInstantiatedSource).instance;
     } else {
-        const result = await WebAssembly.instantiateStreaming(fetch(options.wasmUrl!.toString()), {});
-        instance = result.instance;
+        const url = options.wasmUrl!.toString();
+        try {
+            const result = await WebAssembly.instantiateStreaming(fetch(url), {});
+            instance = result.instance;
+        } catch {
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error(`wasm fetch failed: ${response.status}`);
+            }
+            const bytes = await response.arrayBuffer();
+            const result = await WebAssembly.instantiate(bytes, {});
+            instance = result.instance;
+        }
     }
     const exports = instance.exports as unknown as PmWasmBindings;
-    if (!exports.memory || !exports.pm_solve_json) {
+    if (!exports.memory || !exports.pm_solve_json || !exports.pm_solve_resume_json) {
         throw new Error("pm_wasm missing exports — run pnpm build:wasm");
     }
     return exports;
@@ -58,6 +72,31 @@ export async function solvePackingWasm(
     const written = wasm.pm_solve_json(inPtr, req.length, outPtr, outCap);
     if (written < 0) throw new Error(`pm_solve_json failed: ${written}`);
     return JSON.parse(readUtf8(wasm.memory, outPtr, written));
+}
+
+export interface SolveResumeWasmOptions {
+    checkpoint?: Checkpoint | null;
+    iterBudget?: number;
+}
+
+export async function solvePackingResumeWasm(
+    wasm: PmWasmBindings,
+    problem: unknown,
+    solver: unknown,
+    options: SolveResumeWasmOptions = {},
+): Promise<SolveResumeResult> {
+    const req = JSON.stringify({
+        problem,
+        solver,
+        checkpoint: options.checkpoint ?? null,
+        iter_budget: options.iterBudget ?? null,
+    });
+    const inPtr = writeJson(wasm.memory, req);
+    const outPtr = 131072;
+    const outCap = 524288;
+    const written = wasm.pm_solve_resume_json(inPtr, req.length, outPtr, outCap);
+    if (written < 0) throw new Error(`pm_solve_resume_json failed: ${written}`);
+    return JSON.parse(readUtf8(wasm.memory, outPtr, written)) as SolveResumeResult;
 }
 
 export async function renderSvgWasm(

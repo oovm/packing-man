@@ -1,4 +1,12 @@
-import { SolverPresets, type SolverId } from "./problem.js";
+import { AlgorithmKind, Backend, SolverPresets, type SolverId } from "./problem.js";
+
+export function isResumableSolver(solver: SolverId): boolean {
+    const { backend, algorithm } = solver;
+    if (backend === Backend.cpu && algorithm === AlgorithmKind.force_relaxation) return true;
+    if (backend === Backend.cpu && algorithm === AlgorithmKind.nlp_local_search) return true;
+    if (backend === Backend.gpu && algorithm === AlgorithmKind.gpu_force_relaxation) return true;
+    return false;
+}
 
 export function solverFromAlgorithmFlag(flag: string): SolverId {
     switch (flag) {
