@@ -1,7 +1,7 @@
 <template>
     <section>
         <h1 class="page-title">基准实例</h1>
-        <p class="page-lede">与 <code>pm-benchmark</code> 分类目录一致。点击卡片在演示页加载完整 <code>Problem</code> JSON 并求解。</p>
+        <p class="page-lede">与 <code>pm-benchmark</code> 分类目录一致。点击卡片在演示页加载完整 <code>Problem</code> JSON 并自动渐进求解。</p>
         <div class="fixture-grid">
             <article v-for="item in fixtures" :key="item.id" class="fixture-card">
                 <h3>{{ item.title }}</h3>

@@ -29,7 +29,6 @@
                         <option value="gpu">GPU 力松弛</option>
                     </select>
                 </label>
-                <button type="button" class="btn-primary" @click="onSolve">求解</button>
             </section>
         </aside>
     </div>
@@ -43,16 +42,16 @@
 .panel input, .panel select { display: block; width: 100%; margin-top: 0.25rem; padding: 0.45rem 0.5rem; border-radius: 8px; border: 1px solid var(--pm-border); background: #fff; }
 .panel input:disabled { opacity: 0.55; }
 .fixture-badge { font-size: 0.8rem; color: var(--pm-accent); margin: 0 0 0.75rem; word-break: break-all; }
-.btn-primary { width: 100%; margin-top: 0.25rem; padding: 0.55rem 1rem; border: none; border-radius: 8px; background: var(--pm-accent); color: #fff; font-weight: 600; cursor: pointer; }
-.btn-primary:hover { filter: brightness(1.05); }
 .stage-meta { margin-top: 0.65rem; color: var(--pm-muted); font-size: 0.85rem; font-family: ui-monospace, monospace; }
 @media (max-width: 800px) {
     .workspace { grid-template-columns: 1fr; }
 }
 </style>
 <script client>
-import { runFixtureDemo, runPackingDemo } from "../lib/packing-frame.js";
+import { formatPackStatus, runFixtureDemo, runPackingDemo } from "../lib/packing-frame.js";
 import { fixtureJsonUrl } from "../lib/fixtures-catalog.js";
+
+const DEBOUNCE_MS = 300;
 
 export default class PackingView {
     containerR = 10;
@@ -60,46 +59,86 @@ export default class PackingView {
     count = 19;
     algorithm = "force";
     fixtureId = "";
-    status = "调整参数后点击「求解」";
+    status = "正在初始化…";
 
-    mounted() {
-        const params = new URLSearchParams(window.location.search);
-        const fixture = params.get("fixture");
+    solveToken = 0;
+    _debounceTimer = null;
+
+    onMount() {
+        const search = globalThis.window?.location?.search;
+        if (typeof search !== "string") return;
+
+        const fixture = new URLSearchParams(search).get("fixture");
         if (fixture) {
             this.fixtureId = fixture;
-            this.status = `已加载基准 ${fixture}，点击求解`;
         }
+        this.scheduleSolve();
+    }
+
+    scheduleSolve() {
+        if (typeof globalThis.window?.location?.search !== "string") return;
+        if (this._debounceTimer) clearTimeout(this._debounceTimer);
+        this._debounceTimer = setTimeout(() => this.startSolve(), DEBOUNCE_MS);
     }
 
     onContainerR(e) {
         this.containerR = Number(e.target.value);
+        this.scheduleSolve();
     }
     onCircleR(e) {
         this.circleR = Number(e.target.value);
+        this.scheduleSolve();
     }
     onCount(e) {
         this.count = Number(e.target.value);
+        this.scheduleSolve();
     }
     onAlgorithm(e) {
         this.algorithm = e.target.value;
+        this.scheduleSolve();
     }
 
-    async onSolve() {
-        const host = document.getElementById("pm-svg-host");
-        if (!host) return;
+    async startSolve() {
+        if (typeof globalThis.window?.location?.search !== "string") return;
+
+        const host =
+            this.__vmzDomRoot?.querySelector?.("#pm-svg-host") ??
+            document.getElementById("pm-svg-host");
+        if (!host) {
+            this.status = "渲染容器未就绪";
+            return;
+        }
+
+        const token = ++this.solveToken;
         this.status = "求解中…";
+
+        const callbacks = {
+            shouldContinue: () => this.solveToken === token,
+            onFrame: (r) => {
+                if (this.solveToken !== token) return;
+                this.status = formatPackStatus(r);
+            },
+        };
+
         try {
-            const r = this.fixtureId
-                ? await runFixtureDemo(host, fixtureJsonUrl(this.fixtureId))
-                : await runPackingDemo(host, {
-                      containerR: this.containerR,
-                      circleR: this.circleR,
-                      count: this.count,
-                      algorithm: this.algorithm,
-                  });
-            this.status = `${r.algorithm} · obj ${r.objective.toFixed(4)} · density ${(r.density * 100).toFixed(1)}% · ${r.iterations} iters · ${r.feasible ? "feasible" : "infeasible"}`;
+            if (this.fixtureId) {
+                await runFixtureDemo(host, fixtureJsonUrl(this.fixtureId), callbacks);
+            } else {
+                await runPackingDemo(
+                    host,
+                    {
+                        containerR: this.containerR,
+                        circleR: this.circleR,
+                        count: this.count,
+                        algorithm: this.algorithm,
+                    },
+                    callbacks,
+                );
+            }
         } catch (err) {
-            this.status = String(err);
+            if (this.solveToken === token) {
+                this.status = String(err);
+            }
         }
     }
 }

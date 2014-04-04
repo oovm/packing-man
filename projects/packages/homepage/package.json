@@ -9,7 +9,8 @@
         "precheck": "node ../../../scripts/ensure-vmz-host-manifest.mjs",
         "check": "vmz check .",
         "dev": "vmz dev .",
-        "build": "vmz build ."
+        "build": "vmz build .",
+        "postbuild": "node ../../../scripts/patch-vmz-wasm-mime.mjs dist/web-ssr/vmz-runtime.js"
     },
     "dependencies": {
         "@sxo/packing": "workspace:*",

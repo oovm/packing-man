@@ -1,15 +1,19 @@
 import {
     SolverPresets,
     circlesInDisk,
+    isResumableSolver,
     loadPmWasm,
     renderSvgWasm,
+    solvePackingResumeWasm,
     solvePackingWasm,
+    type Checkpoint,
     type Problem,
     type Solution,
     type SolverId,
 } from "@sxo/packing/wasm";
 
 const WASM_URL = "/pm_wasm_bg.wasm";
+const ITER_CHUNK = 50;
 
 export interface PackCirclesOptions {
     containerR: number;
@@ -24,6 +28,12 @@ export interface PackResult {
     algorithm: string;
     objective: number;
     iterations: number;
+}
+
+export interface ProgressiveSolveCallbacks {
+    onFrame?: (result: PackResult) => void;
+    shouldContinue?: () => boolean;
+    iterChunk?: number;
 }
 
 function solverFromFlag(algorithm: PackCirclesOptions["algorithm"]): SolverId {
@@ -87,35 +97,89 @@ function metricsFromSolution(solution: Solution): PackResult {
     };
 }
 
-async function solveAndPaint(
+function formatPackStatus(result: PackResult): string {
+    return `${result.algorithm} · obj ${result.objective.toFixed(4)} · density ${(result.density * 100).toFixed(1)}% · ${result.iterations} iters · ${result.feasible ? "feasible" : "infeasible"}`;
+}
+
+function yieldToBrowser(): Promise<void> {
+    return new Promise((resolve) => {
+        requestAnimationFrame(() => setTimeout(resolve, 16));
+    });
+}
+
+async function solveProgressive(
     host: HTMLElement,
     problem: Problem,
     solver: SolverId,
+    callbacks: ProgressiveSolveCallbacks = {},
 ): Promise<PackResult> {
     const wasm = await loadPmWasm({ wasmUrl: WASM_URL });
-    const solution = (await solvePackingWasm(wasm, problem, solver)) as Solution;
-    const svg = await renderSvgWasm(wasm, problem, solution);
-    host.innerHTML = svg;
-    return metricsFromSolution(solution);
+    const iterChunk = callbacks.iterChunk ?? ITER_CHUNK;
+    const shouldContinue = callbacks.shouldContinue ?? (() => true);
+
+    if (!isResumableSolver(solver)) {
+        const solution = (await solvePackingWasm(wasm, problem, solver)) as Solution;
+        const svg = await renderSvgWasm(wasm, problem, solution);
+        host.innerHTML = svg;
+        const result = metricsFromSolution(solution);
+        callbacks.onFrame?.(result);
+        return result;
+    }
+
+    let checkpoint: Checkpoint | null = null;
+    let lastResult: PackResult | null = null;
+    let prevObjective: number | null = null;
+    let stableFrames = 0;
+
+    while (shouldContinue()) {
+        const resume = await solvePackingResumeWasm(wasm, problem, solver, {
+            checkpoint,
+            iterBudget: iterChunk,
+        });
+        checkpoint = resume.checkpoint;
+        const svg = await renderSvgWasm(wasm, problem, resume.solution);
+        host.innerHTML = svg;
+        lastResult = metricsFromSolution(resume.solution);
+        callbacks.onFrame?.(lastResult);
+
+        if (
+            prevObjective !== null &&
+            Math.abs(lastResult.objective - prevObjective) < 1e-10
+        ) {
+            stableFrames += 1;
+            if (stableFrames >= 2) break;
+        } else {
+            stableFrames = 0;
+            prevObjective = lastResult.objective;
+        }
+
+        await yieldToBrowser();
+    }
+
+    return lastResult!;
 }
 
 export async function runPackingDemo(
     host: HTMLElement,
     options: PackCirclesOptions,
+    callbacks: ProgressiveSolveCallbacks = {},
 ): Promise<PackResult> {
     const problem = circlesInDisk(options.circleR, options.containerR, options.count);
-    return solveAndPaint(host, problem, solverFromFlag(options.algorithm));
+    return solveProgressive(host, problem, solverFromFlag(options.algorithm), callbacks);
 }
 
 export async function runFixtureDemo(
     host: HTMLElement,
     fixtureUrl: string,
+    callbacks: ProgressiveSolveCallbacks = {},
 ): Promise<PackResult & { fixtureId: string }> {
     const res = await fetch(fixtureUrl);
     if (!res.ok) {
         throw new Error(`fixture fetch failed: ${res.status}`);
     }
     const fixture = (await res.json()) as { id: string; problem: Problem };
-    const result = await solveAndPaint(host, fixture.problem, solverForProblem(fixture.problem));
+    const result = await solveProgressive(host, fixture.problem, solverForProblem(fixture.problem), callbacks);
     return { ...result, fixtureId: fixture.id };
 }
+
+export { formatPackStatus };
