@@ -1,6 +1,11 @@
 version: 2
 updates:
-  - package-ecosystem: gradle
+  - package-ecosystem: cargo
+    directory: /
+    target-branch: dev
+    schedule:
+      interval: weekly
+  - package-ecosystem: npm
     directory: /
     target-branch: dev
     schedule:
