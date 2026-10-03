@@ -10,8 +10,8 @@ catalogs:
       specifier: ^0.2.5
       version: 0.2.5
     '@vmz/vmz':
-      specifier: ^0.2.5
-      version: 0.2.5
+      specifier: ^0.2.7
+      version: 0.2.7
     typescript:
       specifier: ^5.9.2
       version: 5.9.3
@@ -41,7 +41,7 @@ importers:
     devDependencies:
       '@vmz/vmz':
         specifier: 'catalog:'
-        version: 0.2.5(typescript@5.9.3)
+        version: 0.2.7(typescript@5.9.3)
 
   projects/packages/packing:
     devDependencies:
@@ -304,6 +304,7 @@ packages:
     engines: {node: ^22.20 || ^24.12 || >=25}
     cpu: [x64]
     os: [linux]
+    libc: [glibc]
 
   '@rollup/rollup-android-arm-eabi@4.63.5':
     resolution: {integrity: sha512-J25QJU+B78T4FhhBsNpLJyVWOi31mwtpcMwywHmOKH65Q9IWGA81gPj+dnwlhU8wktVriYE+tFAaQgrnJRzAZg==}
@@ -339,66 +340,79 @@ packages:
     resolution: {integrity: sha512-CFmhpvAwzSaWMlN3VN7UtmoTihlZNzoP0juQib5TQRnYUyDV8dXeWOp29sobWAT6gXl/hQgAClLlEiYozQG3OQ==}
     cpu: [arm]
     os: [linux]
+    libc: [glibc]
 
   '@rollup/rollup-linux-arm-musleabihf@4.63.5':
     resolution: {integrity: sha512-Uc9H8eXCOayV6JLTH5bXKMId6qbhNHa818/BgYjm4jrlq3vZquC9cqyvHBw17xy5Mnj5f+I3gFK5JcEf3hSqrw==}
     cpu: [arm]
     os: [linux]
+    libc: [musl]
 
   '@rollup/rollup-linux-arm64-gnu@4.63.5':
     resolution: {integrity: sha512-VcPr/szv/1BFw112Kt//fxulXt/JPqzzidU84iW68L2DdjnOO8QFUv2zTSYBEPHD6movBD4z+bbr5y60GYM7Jw==}
     cpu: [arm64]
     os: [linux]
+    libc: [glibc]
 
   '@rollup/rollup-linux-arm64-musl@4.63.5':
     resolution: {integrity: sha512-BnxtJ5/91BrIHYIkGrmjz/lbMhqEHt1dPFqIxIFR+jPn0xVc/oUSCtIT089zfp5ufwGDlYz2UC+Fe1SRBpYFbQ==}
     cpu: [arm64]
     os: [linux]
+    libc: [musl]
 
   '@rollup/rollup-linux-loong64-gnu@4.63.5':
     resolution: {integrity: sha512-LrYcHZwF+fAMNKHYTOQ5osWM4AZF7YF6D+XtsjDyEvljtt11twc+zHVXBLNEjxVSUnKYsOhvVz4Z213eW02COQ==}
     cpu: [loong64]
     os: [linux]
+    libc: [glibc]
 
   '@rollup/rollup-linux-loong64-musl@4.63.5':
     resolution: {integrity: sha512-nj7QKQePAAUpCpJHtg0pR0W/b92A9NO17JS3BAQmHDn/yhmkir2p8llrKY9TOhleKIaSzy1JhxS3T9FVld6coA==}
     cpu: [loong64]
     os: [linux]
+    libc: [musl]
 
   '@rollup/rollup-linux-ppc64-gnu@4.63.5':
     resolution: {integrity: sha512-5ylkX6dWMeBKge9nTU+Rxfb+ZfaCIJ9lRqIFaK0eAMcWp7OJbYnLveLgXmm0VrvuLKb8qIK+mHyH0qu88RM+iA==}
     cpu: [ppc64]
     os: [linux]
+    libc: [glibc]
 
   '@rollup/rollup-linux-ppc64-musl@4.63.5':
     resolution: {integrity: sha512-oHK4ZHYFDKjZviK34I+NwgfbGxgI7ztrNxj2hPTSSNFgeq1a/lEd7dHV2fdGAuTH4Iym3RHJg+vAbWaWG4B7Zg==}
     cpu: [ppc64]
     os: [linux]
+    libc: [musl]
 
   '@rollup/rollup-linux-riscv64-gnu@4.63.5':
     resolution: {integrity: sha512-UcetmHZ6XOXuUByiKZyQmb55ZPr0LABr3Ec/HB9wKZn6CEAFWZkE+hsJErJ9hbPBC7nI0dKuELx7CoV6IM7TMg==}
     cpu: [riscv64]
     os: [linux]
+    libc: [glibc]
 
   '@rollup/rollup-linux-riscv64-musl@4.63.5':
     resolution: {integrity: sha512-C5CmDPQBtvjVo8cgQsBs+w6WB0JLkiixhgi6hVLV11hERWdn/p0XcPU2OUcZzac9BPOFq7SbaHFa8r3SWEysCQ==}
     cpu: [riscv64]
     os: [linux]
+    libc: [musl]
 
   '@rollup/rollup-linux-s390x-gnu@4.63.5':
     resolution: {integrity: sha512-lHVQHJFKsuuxLMi3MQO9XVL8Tje3JR82CzB+QDKC5NWBcsIWuwsn9uIM5e3lBhI+fF1/s63qnyYqsg65+8rV/w==}
     cpu: [s390x]
     os: [linux]
+    libc: [glibc]
 
   '@rollup/rollup-linux-x64-gnu@4.63.5':
     resolution: {integrity: sha512-3W9bTFcQNJn71cSJVM9RKIiZOy8DO/XLDii8Uv/Pm6WKqDRj7JV3ZfuXIEfyuy5LXpIzAbB/1M4Ukp9GKNa7nA==}
     cpu: [x64]
     os: [linux]
+    libc: [glibc]
 
   '@rollup/rollup-linux-x64-musl@4.63.5':
     resolution: {integrity: sha512-VDC7rRJlee/scpki96GZ27Omf6yU87s1YXwVTpjE5841faVlDYYT565rgfmoR1U0sqL7z5ivQSDjcsF6VRXyBA==}
     cpu: [x64]
     os: [linux]
+    libc: [musl]
 
   '@rollup/rollup-openbsd-x64@4.63.5':
     resolution: {integrity: sha512-z86Ok2p4pTdv5xqCKZsTooO7yBEiaJR/HzU3Wx8RmWsPoLppnMKROhJusQob8B3IE1ghC343kUW9rC2r+Wf3ig==}
@@ -440,22 +454,34 @@ packages:
     resolution: {integrity: sha512-anZfTrhNfTqiTNf9oLGML+xuvIHuQ8TWO0pu0kxzXQs5O+5qo9+A5DGkiZTTS33ypuW/A7aJ2d1A3drT8ZYMzQ==}
     engines: {node: '>=20'}
 
+  '@vmz/commander@0.2.7':
+    resolution: {integrity: sha512-n2PYCSJCQqAfgYSpgY5vTs7hNH2/8cboZOXe1IlMuiEkUePHoKh6eoKAuXqfii6i8e70yn7m3x9MfADFk2NL9A==}
+    engines: {node: '>=20'}
+
   '@vmz/core@0.2.5':
     resolution: {integrity: sha512-sUo2PtjfzQ6KPuUCUKvB/F97YJ4+BsTijo5RPOogCZqbB968r6mJB1bKeiuo3Qjtim5pf7aHTw2sTTjOBLMcig==}
 
-  '@vmz/diagnostic@0.2.5':
-    resolution: {integrity: sha512-ZQmGFSBk0j60xkHOIFbqo1WQ0L2ynlQBMyj5wSwcGnzMtXwifF81Swq+e/H9zhqDVFm6+HjX0Jr7aIaSGdKFAQ==}
+  '@vmz/core@0.2.7':
+    resolution: {integrity: sha512-9CPoyXR4e3s9EWN9CnV9PMnwbsZMew3JNGwz6t63Yu/JgL4Yf4LvF7M8EZTWcwDW4K0CiHHLlctXw/32E766kg==}
+
+  '@vmz/diagnostic@0.2.7':
+    resolution: {integrity: sha512-pJVdePLpwwlNbgZ/0kYR+VuOmy5E/KF+sKJUAUW2TFivKAz/EnJ3d+hLAx/tQBIaU8NawS1POMQ9S6JOhwzzBA==}
     engines: {node: '>=20'}
 
-  '@vmz/plugin@0.2.5':
-    resolution: {integrity: sha512-IMuLmfWx2650RLF0YUdypcSNZDhMupFBSwr6kv/TzRL/QyRztvVuEqdjG6Rxk8O5G6TeAoy7KdSNHqclJyCwwA==}
+  '@vmz/plugin@0.2.7':
+    resolution: {integrity: sha512-gzaMeY9dAfyehKgNUZSNPGGscUkgiEYz5L69iz3wId4RYE5q+zXUWgHWKfSk8lDRQiJKc8mm75AT3Yn7fNtoWA==}
 
-  '@vmz/protocol@0.2.5':
-    resolution: {integrity: sha512-0dqAw+qhKHFOOM2m205R6rELr5qBHrl9P3oBQcTb6BEaXbciPLIZgmhpb0m6sA+aDFz3Pn4JDDDZFpV7qOAHeg==}
+  '@vmz/protocol@0.2.7':
+    resolution: {integrity: sha512-wvpmGmOo9h9wdQX6fI2dU0vgP7kZM3NZpzv8B1s+h3Agd1vtgNODe3c+KLR2L8wSrBebi1ppjeU8tuQOVuDe7Q==}
     engines: {node: '>=20'}
 
   '@vmz/vmz-darwin-arm64@0.2.5':
     resolution: {integrity: sha512-QICA+367fvwtZoV7JtF6aPk27ECfTUyUdjFvSG2v84MccABi2CG3rsW0laH2Q1s6+X2Il3izxO+JPA+1qKpIfw==}
+    cpu: [arm64]
+    os: [darwin]
+
+  '@vmz/vmz-darwin-arm64@0.2.7':
+    resolution: {integrity: sha512-G0qoPKaaqVNM1kIihBEBHTFqihzwEec1RNpyT4glouOT7zUj3W8zd+Z+XofaNZf6MVi/Knqy2fbOOLe+kjlrYA==}
     cpu: [arm64]
     os: [darwin]
 
@@ -464,8 +490,18 @@ packages:
     cpu: [x64]
     os: [darwin]
 
+  '@vmz/vmz-darwin-x64@0.2.7':
+    resolution: {integrity: sha512-nAe745Wzf6US5gGjufxmqErN2AP+qDa3eXnqeUCLOesVONj6D5nWbrq3crbWQ6w9mfNkW0lzAAk3FM+265TiHQ==}
+    cpu: [x64]
+    os: [darwin]
+
   '@vmz/vmz-linux-arm64@0.2.5':
     resolution: {integrity: sha512-BxwpV1cbKqecQJpbQ4qx7qVCnC8KMG2VTLe3b+Dbvo97Ny34aHXe6iNZ0kGBe8Uq70L3OnJ9xZz+EU07kyzDCw==}
+    cpu: [arm64]
+    os: [linux]
+
+  '@vmz/vmz-linux-arm64@0.2.7':
+    resolution: {integrity: sha512-VoXylmbKeAdCI5QrO6Z3jsRNu5syU6Yk8axZWuUcTSl95ZAreLMw6NxOzbQfckyRtajtitqC/FQMhKYMuL7VVA==}
     cpu: [arm64]
     os: [linux]
 
@@ -474,8 +510,18 @@ packages:
     cpu: [x64]
     os: [linux]
 
+  '@vmz/vmz-linux-x64@0.2.7':
+    resolution: {integrity: sha512-bcH1SgVjHe6u1TmJsU9WEcaEGpe+E37grdDsD+pJ9BigZhNYoLKRKx8sY2+4pqwOuGJlwKSTjLTedoP63594JQ==}
+    cpu: [x64]
+    os: [linux]
+
   '@vmz/vmz-win32-arm64@0.2.5':
     resolution: {integrity: sha512-KFIc3as/VDEXsOON4dq9DYQXeisBSo9f2zgkGuxWBcWkoqzNy+kHAkzLRDE7McAWsX4lsLsi3eA26A+fCFEXHw==}
+    cpu: [arm64]
+    os: [win32]
+
+  '@vmz/vmz-win32-arm64@0.2.7':
+    resolution: {integrity: sha512-VMmfrAIgEvBh7sgx4FH6h10Aijdh/NfJ3mEYPK7LsqzFN1hqwSHnwNdz/AVG/K4CbL29/I4q7orGx0r6GZC/Xw==}
     cpu: [arm64]
     os: [win32]
 
@@ -484,12 +530,17 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@vmz/vmz@0.2.5':
-    resolution: {integrity: sha512-UN7OiJsHQjO+0jV8M3e0+Ps+BPhpObxsoKnnKfv3SriCDeeTxKeLJ4Um4SGWoP5I0pczl7Af1yFeFLBNrnIdtw==}
+  '@vmz/vmz-win32-x64@0.2.7':
+    resolution: {integrity: sha512-VFVP33kTQaUyEQ/Z/YJBdjkENGMmZQsCkuSB+g/SowLhTTJbgZkU27RVF6HBJ2gabZp3V90FY0E3qrKN5V06ZQ==}
+    cpu: [x64]
+    os: [win32]
+
+  '@vmz/vmz@0.2.7':
+    resolution: {integrity: sha512-bxVFuAYbMfE1F+ftYC2bg66jlof7UIkYqDTnQpFIIwhLxlAPcP0F0OuIbILaovmZCsWgo1rNmdw4wIFEJb+KDA==}
     hasBin: true
     peerDependencies:
-      '@vmz/plugin-markdown-it': 0.2.5
-      '@vmz/test': 0.2.5
+      '@vmz/plugin-markdown-it': 0.2.7
+      '@vmz/test': 0.2.7
       typescript: ^5.8.3
     peerDependenciesMeta:
       '@vmz/plugin-markdown-it':
@@ -872,6 +923,8 @@ snapshots:
 
   '@vmz/commander@0.2.5': {}
 
+  '@vmz/commander@0.2.7': {}
+
   '@vmz/core@0.2.5':
     dependencies:
       linkedom: 0.18.13
@@ -885,47 +938,78 @@ snapshots:
     transitivePeerDependencies:
       - canvas
 
-  '@vmz/diagnostic@0.2.5': {}
-
-  '@vmz/plugin@0.2.5':
+  '@vmz/core@0.2.7':
     dependencies:
-      '@vmz/protocol': 0.2.5
+      linkedom: 0.18.13
+    optionalDependencies:
+      '@vmz/vmz-darwin-arm64': 0.2.7
+      '@vmz/vmz-darwin-x64': 0.2.7
+      '@vmz/vmz-linux-arm64': 0.2.7
+      '@vmz/vmz-linux-x64': 0.2.7
+      '@vmz/vmz-win32-arm64': 0.2.7
+      '@vmz/vmz-win32-x64': 0.2.7
+    transitivePeerDependencies:
+      - canvas
 
-  '@vmz/protocol@0.2.5': {}
+  '@vmz/diagnostic@0.2.7': {}
+
+  '@vmz/plugin@0.2.7':
+    dependencies:
+      '@vmz/protocol': 0.2.7
+
+  '@vmz/protocol@0.2.7': {}
 
   '@vmz/vmz-darwin-arm64@0.2.5':
+    optional: true
+
+  '@vmz/vmz-darwin-arm64@0.2.7':
     optional: true
 
   '@vmz/vmz-darwin-x64@0.2.5':
     optional: true
 
+  '@vmz/vmz-darwin-x64@0.2.7':
+    optional: true
+
   '@vmz/vmz-linux-arm64@0.2.5':
+    optional: true
+
+  '@vmz/vmz-linux-arm64@0.2.7':
     optional: true
 
   '@vmz/vmz-linux-x64@0.2.5':
     optional: true
 
+  '@vmz/vmz-linux-x64@0.2.7':
+    optional: true
+
   '@vmz/vmz-win32-arm64@0.2.5':
+    optional: true
+
+  '@vmz/vmz-win32-arm64@0.2.7':
     optional: true
 
   '@vmz/vmz-win32-x64@0.2.5':
     optional: true
 
-  '@vmz/vmz@0.2.5(typescript@5.9.3)':
+  '@vmz/vmz-win32-x64@0.2.7':
+    optional: true
+
+  '@vmz/vmz@0.2.7(typescript@5.9.3)':
     dependencies:
-      '@vmz/commander': 0.2.5
-      '@vmz/core': 0.2.5
-      '@vmz/diagnostic': 0.2.5
-      '@vmz/plugin': 0.2.5
-      '@vmz/protocol': 0.2.5
+      '@vmz/commander': 0.2.7
+      '@vmz/core': 0.2.7
+      '@vmz/diagnostic': 0.2.7
+      '@vmz/plugin': 0.2.7
+      '@vmz/protocol': 0.2.7
       jiti: 2.7.0
     optionalDependencies:
-      '@vmz/vmz-darwin-arm64': 0.2.5
-      '@vmz/vmz-darwin-x64': 0.2.5
-      '@vmz/vmz-linux-arm64': 0.2.5
-      '@vmz/vmz-linux-x64': 0.2.5
-      '@vmz/vmz-win32-arm64': 0.2.5
-      '@vmz/vmz-win32-x64': 0.2.5
+      '@vmz/vmz-darwin-arm64': 0.2.7
+      '@vmz/vmz-darwin-x64': 0.2.7
+      '@vmz/vmz-linux-arm64': 0.2.7
+      '@vmz/vmz-linux-x64': 0.2.7
+      '@vmz/vmz-win32-arm64': 0.2.7
+      '@vmz/vmz-win32-x64': 0.2.7
       typescript: 5.9.3
     transitivePeerDependencies:
       - canvas

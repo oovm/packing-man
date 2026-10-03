@@ -10,4 +10,4 @@ catalog:
   vite: "^7.1.5"
   vitest: "^3.2.4"
   "@vmz/core": "^0.2.5"
-  "@vmz/vmz": "^0.2.5"
+  "@vmz/vmz": "^0.2.7"
