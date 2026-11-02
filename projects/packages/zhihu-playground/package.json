@@ -16,7 +16,7 @@
     "@sxo/packing-unknown-wasm32": "workspace:*"
   },
   "devDependencies": {
-    "typescript": "^5.9.2",
+    "typescript": "^7.0.2",
     "vite": "^7.1.5"
   },
   "aiworksEventTrackingBuild": 1
