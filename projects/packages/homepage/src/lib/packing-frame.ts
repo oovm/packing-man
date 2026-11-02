@@ -30,10 +30,13 @@ export interface PackResult {
     iterations: number;
 }
 
+export type PackFrameCallback = (result: PackResult) => void;
+export type PackContinueCallback = () => boolean;
+
 export interface ProgressiveSolveCallbacks {
-    onFrame?: (result: PackResult) => void;
-    shouldContinue?: () => boolean;
-    iterChunk?: number;
+    onFrame: PackFrameCallback | undefined;
+    shouldContinue: PackContinueCallback | undefined;
+    iterChunk: number | undefined;
 }
 
 function solverFromFlag(algorithm: PackCirclesOptions["algorithm"]): SolverId {
@@ -83,10 +86,7 @@ export function solverForProblem(problem: Problem): SolverId {
 }
 
 function metricsFromSolution(solution: Solution): PackResult {
-    const metrics = solution.metrics as Solution["metrics"] & {
-        objective_value?: number;
-        radius_sum?: number;
-    };
+    const metrics = solution.metrics as Solution["metrics"] & Record<string, number | undefined>;
     const objective = metrics.radius_sum ?? metrics.objective_value ?? metrics.density;
     return {
         density: metrics.density,
