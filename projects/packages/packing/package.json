@@ -32,7 +32,7 @@
         "@sxo/packing-win32-x64": "workspace:*"
     },
     "devDependencies": {
-        "@types/node": "^22.10.0",
+        "@types/node": "^26.6.6",
         "@webgpu/types": "^0.1.60",
         "typescript": "catalog:"
     },
