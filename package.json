@@ -15,7 +15,7 @@
         "dev:homepage": "pnpm --filter @sxo/packing-homepage run dev"
     },
     "devDependencies": {
-        "@doki-land/nifty": "^0.1.10",
+        "@doki-land/nifty": "^0.1.11",
         "@types/node": "^22.10.0",
         "typescript": "5.9.3"
     }
