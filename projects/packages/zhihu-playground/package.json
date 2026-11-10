@@ -17,7 +17,7 @@
   },
   "devDependencies": {
     "typescript": "^5.9.2",
-    "vite": "^8.3.5"
+    "vite": "^8.3.6"
   },
   "aiworksEventTrackingBuild": 1
 }
